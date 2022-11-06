@@ -23,6 +23,5 @@ public class EmailSevice {
 
     public void save(PaymentDTO paymentDTO) {
         emailRepository.save(paymentDTO);
-        List<PaymentDTO> paymentDTOS = emailRepository.findAll();
     }
 }
