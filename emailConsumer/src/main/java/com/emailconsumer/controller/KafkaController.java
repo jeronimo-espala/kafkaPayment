@@ -1,9 +1,9 @@
 package com.emailconsumer.controller;
 
-import com.emailconsumer.dto.PaymentDTO;
 import com.emailconsumer.service.EmailSevice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +17,8 @@ public class KafkaController {
     @KafkaListener(
             topics = "payment",
             containerFactory = "kafkaListenerContainerFactory")
-    public void greetingListener(PaymentDTO payload) {
-        log.info("Payload received: " + payload);
-        emailSevice.save(payload);
+    public void emailListener(ConsumerRecord<String, avro.payment.PaymentAvro> record) {
+        log.info("Payload received: " + record.value());
+        emailSevice.save(record.value());
     }
 }

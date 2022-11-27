@@ -1,0 +1,23 @@
+{
+    "type": "record",
+    "namespace": "avro.payment",
+    "name": "PaymentAvro",
+    "version": "1",
+    "fields": [
+    {
+        "name": "id",
+        "type": "string"
+    },
+    {
+        "name": "name",
+        "type": "string"
+    },
+    {
+        "name": "value",
+        "type": "double"
+    },
+    {
+        "name": "email",
+        "type": "string"
+    }]
+}

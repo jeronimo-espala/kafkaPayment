@@ -1,6 +1,6 @@
 package com.emailconsumer.config;
 
-import com.emailconsumer.dto.PaymentDTO;
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,18 +23,19 @@ public class KafkaConsumerConfig {
     private static final String groupId = "emailGroup";
 
     @Bean
-    public ConsumerFactory<String, PaymentDTO> consumerFactory() {
+    public ConsumerFactory<String, avro.payment.PaymentAvro> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaMessageDeserializer.class);
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new KafkaMessageDeserializer());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
+        props.put("schema.registry.url", "http://localhost:8081");
+        return new DefaultKafkaConsumerFactory<>(props);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PaymentDTO> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, PaymentDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, avro.payment.PaymentAvro> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, avro.payment.PaymentAvro> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

@@ -16,7 +16,8 @@ public class EmailSevice {
 
     private final EmailRepository emailRepository;
 
-    public void save(PaymentDTO paymentDTO) {
+    public void save(avro.payment.PaymentAvro payload) {
+        PaymentDTO paymentDTO = new PaymentDTO(payload.getId().toString(), payload.getName().toString(), payload.getValue(), payload.getEmail().toString());
         var retorno = emailRepository.save(paymentDTO);
         log.info("Saved on database: " + retorno);
     }
