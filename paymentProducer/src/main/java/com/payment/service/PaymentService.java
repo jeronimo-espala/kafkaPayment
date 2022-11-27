@@ -1,6 +1,7 @@
 package com.payment.service;
 
 import com.payment.dto.PaymentDTO;
+import com.payment.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,14 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
 
     private static final String TOPIC = "payment";
-    private final KafkaTemplate<String, PaymentDTO> kafkaTemplate;
+    private final KafkaTemplate<String, payment.PaymentAvro> kafkaTemplate;
+    private final PaymentRepository paymentRepository;
 
     public PaymentDTO sendTopic(PaymentDTO paymentDTO) {
-        kafkaTemplate.send(TOPIC, paymentDTO);
+        paymentRepository.save(paymentDTO);
+        payment.PaymentAvro paymentAvro = payment.PaymentAvro.newBuilder().setName(paymentDTO.getName()).setEmail(paymentDTO.getEmail())
+                .setId(paymentDTO.getId()).setValue(paymentDTO.getValue()).build();
+        kafkaTemplate.send(TOPIC, paymentAvro);
         return paymentDTO;
     }
 }
