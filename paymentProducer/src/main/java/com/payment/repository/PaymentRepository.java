@@ -1,7 +1,7 @@
 package com.payment.repository;
 
-import com.payment.dto.PaymentDTO;
+import com.payment.domain.Payment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface PaymentRepository extends MongoRepository<PaymentDTO, String> {
+public interface PaymentRepository extends MongoRepository<Payment, String> {
 }

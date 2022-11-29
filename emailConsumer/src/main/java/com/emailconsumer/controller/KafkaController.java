@@ -1,6 +1,6 @@
 package com.emailconsumer.controller;
 
-import com.emailconsumer.service.EmailSevice;
+import com.emailconsumer.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class KafkaController {
 
-    private final EmailSevice emailSevice;
+    private final EmailService emailSevice;
 
     @KafkaListener(
             topics = "payment",

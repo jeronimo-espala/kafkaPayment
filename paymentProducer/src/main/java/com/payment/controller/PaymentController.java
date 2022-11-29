@@ -1,7 +1,7 @@
 package com.payment.controller;
 
-import com.payment.dto.PaymentDTO;
-import com.payment.service.PaymentService;
+import com.payment.service.dto.PaymentDTO;
+import com.payment.service.impl.PaymentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 public class PaymentController {
 
     private static final String API_PAYMENT = "/payment";
-    private final PaymentService paymentService;
+    private final PaymentServiceImpl paymentService;
 
     @PostMapping
     public ResponseEntity<PaymentDTO> payment(@RequestBody PaymentDTO paymentDTO) throws URISyntaxException {
