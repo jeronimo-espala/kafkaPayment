@@ -23,7 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDTO sendTopic(PaymentDTO paymentDTO) {
         var paymentCore = paymentMapper.toEntity(paymentDTO);
         Payment pay = paymentRepository.insert(paymentCore);
-        log.info("Saved on database: " + paymentCore);
+        log.info("Saved on database: " + pay);
         payment.PaymentAvro paymentAvro = payment.PaymentAvro.newBuilder().setName(paymentCore.getName()).setEmail(paymentCore.getEmail())
                 .setId(paymentCore.getId()).setValue(paymentCore.getValue()).build();
         kafkaTemplate.send(TOPIC, paymentAvro);

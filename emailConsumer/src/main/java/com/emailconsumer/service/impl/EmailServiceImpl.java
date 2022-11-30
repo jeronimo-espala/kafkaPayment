@@ -1,6 +1,6 @@
 package com.emailconsumer.service.impl;
 
-import com.emailconsumer.dto.PaymentDTO;
+import com.emailconsumer.service.dto.PaymentDTO;
 import com.emailconsumer.repository.EmailRepository;
 import com.emailconsumer.service.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,9 @@ public class EmailServiceImpl implements EmailService {
 
     private final EmailRepository emailRepository;
 
-    public void save(avro.payment.PaymentAvro payload) {
+    public void save(payment.PaymentAvro payload) {
         PaymentDTO paymentDTO = new PaymentDTO(payload.getId().toString(), payload.getName().toString(), payload.getValue(), payload.getEmail().toString());
         var retorno = emailRepository.save(paymentDTO);
-        log.info("Saved on database: " + paymentDTO);
+        log.info("Saved on database: " + retorno);
     }
 }

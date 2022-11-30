@@ -1,5 +1,5 @@
 package com.emailconsumer.service;
 
 public interface EmailService {
-    void save(avro.payment.PaymentAvro payload);
+    void save(payment.PaymentAvro payload);
 }

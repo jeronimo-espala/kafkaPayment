@@ -1,4 +1,4 @@
-package com.emailconsumer.dto;
+package com.emailconsumer.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

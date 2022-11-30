@@ -10,15 +10,16 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class KafkaController {
+public class EmailController {
 
     private final EmailService emailSevice;
 
     @KafkaListener(
             topics = "payment",
             containerFactory = "kafkaListenerContainerFactory")
-    public void emailListener(ConsumerRecord<String, avro.payment.PaymentAvro> record) {
+    public void emailListener(ConsumerRecord<String, payment.PaymentAvro> record) {
         log.info("Payload received: " + record.value());
-        emailSevice.save(record.value());
+        var paymentAvro = record.value();
+        emailSevice.save(paymentAvro);
     }
 }
